@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Filter</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f4f4f4; padding:40px; }
+  .container { background:white; padding:25px; width:420px; margin:auto; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.1); }
+  button { margin:5px; padding:8px 14px; border:none; background:#2563eb; color:white; border-radius:6px; cursor:pointer; }
+  #search { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; margin:10px 0; }
+  ul { list-style:none; padding:0; }
+  li { background:#eaeaea; margin:6px 0; padding:10px; border-radius:6px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Product Filter</h2>
+
+  <input type="text" id="search" placeholder="Search products...">
+
+  <div>
+    <button onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('electronics')">Electronics</button>
+    <button onclick="filterProducts('clothing')">Clothing</button>
+  </div>
+
+  <ul id="productList"></ul>
+</div>
+
+<script>
+  const products = [
+    { name: "Smartphone", category: "electronics" },
+    { name: "Laptop", category: "electronics" },
+    { name: "Headphones", category: "electronics" },
+    { name: "T-Shirt", category: "clothing" },
+    { name: "Jeans", category: "clothing" },
+    { name: "Jacket", category: "clothing" },
+    { name: "Smartwatch", category: "electronics" },
+    { name: "Socks", category: "clothing" },
+    { name: "Camera", category: "electronics" },
+    { name: "Hoodie", category: "clothing" }
+  ];
+
+  const list = document.getElementById("productList");
+  const searchBox = document.getElementById("search");
+
+  function display(data) {
+    list.innerHTML = "";
+    data.forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = p.name;
+      list.appendChild(li);
+    });
+  }
+
+  function filterProducts(category) {
+    let filtered = products;
+    if (category !== "all") filtered = products.filter(p => p.category === category);
+    const keyword = searchBox.value.toLowerCase();
+    filtered = filtered.filter(p => p.name.toLowerCase().includes(keyword));
+    display(filtered);
+  }
+
+  searchBox.addEventListener("input", () => filterProducts("all"));
+
+  display(products);
+</script>
+
+</body>
+</html>
